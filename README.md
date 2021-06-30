@@ -1,6 +1,33 @@
 # digitizing_prescriptions
 
-A Flutter application that converts prescriptions to text.
+<p>A Flutter application that converts prescriptions to text.</p>
+
+Pick any image in your gallery and get it displayed as text.
+
+### Packages Used
+* camerakit
+* firebase_ml_vision
+* image_picker
+
+## Installation
+
+ 1. First you need to have [Android Studio](https://developer.android.com/studio/install)/[VS Code](https://code.visualstudio.com/) installed in your device.
+ 2. Clone this repo using this command below <br/>
+ `git clone https://github.com/arungovindm2001/digitizing-prescriptions`
+ 3. Open the project with Android Studio/VS Code.
+ 4. Connect your phone with developer mode switched on
+	 - Steps to turn on developer mode:
+		1.  Open **Settings**.
+		2.  Select System.
+		3.  Scroll to the bottom and select **About phone**.
+		4.  Scroll to the bottom and **tap Build number 7 times**.
+		5.  Return to the previous screen to find  **Developer options**  near the bottom.
+		6.  Scroll down and **enable USB debugging**.
+	
+ 5. Your device should be present on the virtual devices list.
+ 6. Run the app. The app will open in your phone.
+ 
+ **WARNING:** The app is still in development stage. You might run into some issues while installing.
 
 ## Getting Started
 
