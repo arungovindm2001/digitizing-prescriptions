@@ -1,6 +1,6 @@
-// import 'package:digitizing_prescriptions/app.dart';
-import 'package:digitizing_prescriptions/camera.dart';
+import 'package:digitizing_prescriptions/app.dart';
+// import 'package:digitizing_prescriptions/camera.dart';
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(Camera());
+void main() => runApp(MyApp());

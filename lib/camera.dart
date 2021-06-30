@@ -4,18 +4,20 @@ import 'package:camerakit/CameraKitController.dart';
 import 'package:camerakit/CameraKitView.dart';
 import 'package:flutter/material.dart';
 
+// import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+
 class Camera extends StatefulWidget {
   @override
-  _CameraState createState() => _CameraState();
+  CameraState createState() => CameraState();
 }
 
-class _CameraState extends State<Camera> {
+class CameraState extends State<Camera> {
   String _platformVersion = 'Unknown';
   CameraKitView cameraKitView;
   CameraFlashMode _flashMode = CameraFlashMode.on;
   CameraKitController cameraKitController;
   bool _isFlashOn = false;
-  bool _isFrontCam = false;
 
   @override
   void initState() {
@@ -29,7 +31,6 @@ class _CameraState extends State<Camera> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
     if (!mounted) return;
@@ -58,12 +59,13 @@ class _CameraState extends State<Camera> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.camera),
                     onPressed: () {
                       cameraKitController.takePicture().then((value) =>
-                          print("Flutter take picture result: " + value));
+                      print("Flutter take picture result: " + value));
                     },
                   ),
                   IconButton(
