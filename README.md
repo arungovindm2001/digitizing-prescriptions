@@ -2,7 +2,8 @@
 
 <p>A Flutter application that converts prescriptions to text.</p>
 
-Pick any image in your gallery and get it displayed as text.
+* Pick any image in your gallery and get it displayed as text.
+* Take a photo of your prescription and get it converted it as text. **(under development)**
 
 ### Packages Used
 * camerakit
@@ -15,7 +16,9 @@ Pick any image in your gallery and get it displayed as text.
  2. Clone this repo using this command below <br/>
  `git clone https://github.com/arungovindm2001/digitizing-prescriptions`
  3. Open the project with Android Studio/VS Code.
- 4. Connect your phone with developer mode switched on
+ 4. Install the required dependencies by the following command<br>
+ `flutter pub get`
+ 6. Connect your phone with developer mode switched on
 	 - Steps to turn on developer mode:
 		1.  Open **Settings**.
 		2.  Select System.
