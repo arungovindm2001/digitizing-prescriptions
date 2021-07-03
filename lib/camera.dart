@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 // import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 
 class Camera extends StatefulWidget {
+  CameraState cameraState = new CameraState();
   @override
   CameraState createState() => CameraState();
+  void cameraInitialize() {
+    cameraState.initState();
+  }
 }
 
 class CameraState extends State<Camera> {
