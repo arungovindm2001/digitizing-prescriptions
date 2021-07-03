@@ -104,18 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SizedBox(height: 10.0),
           SizedBox(height: 10.0),
-          text == ''
-              ? Text('Text will display here')
-              : Expanded(
+          Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
-                      child: Text(
-                        text,
+                      child: SelectableText(text, toolbarOptions: ToolbarOptions(copy: true, selectAll: true),),
                       ),
                     ),
                   ),
-                ),
         ],
       ),
     );
