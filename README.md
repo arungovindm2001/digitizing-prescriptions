@@ -6,7 +6,9 @@
 * Take a photo of your prescription and get it converted it as text. **(under development)**
 
 ### Packages Used
-* camerakit
+* camera
+* path_provider
+* intl
 * firebase_ml_vision
 * image_picker
 

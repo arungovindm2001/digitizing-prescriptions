@@ -25,14 +25,11 @@ class _MyHomePageState extends State<MyHomePage> {
   File pickedImage;
   var text = '';
 
-  bool imageLoaded = false;
-
   Future pickImage() async {
     var awaitImage = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       pickedImage = awaitImage;
-      imageLoaded = true;
     });
     FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(pickedImage);
     TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
@@ -62,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Camera()),
+              MaterialPageRoute(builder: (context) => CameraScreen()),
             );
           },
           ),
@@ -70,33 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 100.0),
-          imageLoaded
-              ? Center(
-                  child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(blurRadius: 20),
-                    ],
-                  ),
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 8),
-                  height: 250,
-                  child: Image.file(
-                    pickedImage,
-                    fit: BoxFit.cover,
-                  ),
-                ))
-              : Container(),
-          SizedBox(height: 10.0),
           Center(
-            child: FlatButton.icon(
+            child: TextButton.icon(
               icon: Icon(
                 Icons.image_outlined,
                 size: 100,
               ),
               label: Text(''),
-              textColor: Theme.of(context).primaryColor,
+              // textColor: Theme.of(context).primaryColor,
               onPressed: () async {
                 pickImage();
               },
