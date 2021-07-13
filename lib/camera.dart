@@ -7,17 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 List<CameraDescription> cameras = [];
-
-void checkCameras() async {
-  try {
-    WidgetsFlutterBinding.ensureInitialized();
-    cameras = await availableCameras();
-  } on CameraException catch (e) {
-    print(e);
-  }
-  runApp(Camera());
-}
-
 class Camera extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -39,8 +28,13 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   void initState() {
     super.initState();
+    void main() async {
+      WidgetsFlutterBinding.ensureInitialized();
+      cameras = await availableCameras();
+    }
+    main();
 
-    _controller = CameraController(cameras[0], ResolutionPreset.medium);
+    _controller = CameraController(cameras[0], ResolutionPreset.ultraHigh);
     _controller.initialize().then((_) {
       if (!mounted) {
         return;
@@ -48,7 +42,6 @@ class _CameraScreenState extends State<CameraScreen> {
       setState(() {});
     });
   }
-
   @override
   void dispose() {
     _controller.dispose();

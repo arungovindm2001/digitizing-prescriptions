@@ -1,4 +1,5 @@
 
+import 'package:digitizing_prescriptions/app.dart';
 import 'package:flutter/material.dart';
 import 'package:digitizing_prescriptions/camera.dart';
 
@@ -35,15 +36,27 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Row(),
-                      Center(
-                        child: ElevatedButton.icon(
+                          ElevatedButton.icon(
                           icon: const Icon(Icons.camera_alt),
                           label:Text('Camera'),
                           onPressed: () async {
-                                checkCameras();
+                            Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Camera()),
+                        );
+                              }
+                          ),
+                          ElevatedButton.icon(
+                          icon: const Icon(Icons.image_outlined),
+                          label:Text('Pick from Gallery'),
+                          onPressed: () {
+                                Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyHomePage()),
+                        );
                               }
                           )
-                        ),
                     ],
                   ),
                 ),
