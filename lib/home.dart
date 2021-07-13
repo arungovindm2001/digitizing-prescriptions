@@ -1,7 +1,9 @@
+import 'dart:io';
 
-import 'package:digitizing_prescriptions/app.dart';
 import 'package:flutter/material.dart';
 import 'package:digitizing_prescriptions/camera.dart';
+import 'package:digitizing_prescriptions/textRecognize.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -50,11 +52,16 @@ class HomeScreen extends StatelessWidget {
                           ElevatedButton.icon(
                           icon: const Icon(Icons.image_outlined),
                           label:Text('Pick from Gallery'),
-                          onPressed: () {
-                                Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => MyHomePage()),
-                        );
+                          onPressed: () async {
+                            File awaitImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+                            String image = awaitImage.path;
+                            print(image);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailScreen(image),
+                              ),
+                            );
                               }
                           )
                     ],
