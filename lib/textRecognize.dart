@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+
 import 'dart:io';
 import 'dart:ui';
 import 'dart:async';
@@ -39,9 +47,7 @@ class _DetailScreenState extends State<DetailScreen> {
     String text = "";
     for (TextBlock block in visionText.blocks) {
       for (TextLine line in block.lines) {
-        for (TextElement word in line.elements) {
-          text += word.text + '\n';
-        }
+        text += line.text + '\n';
       }
     }
 
@@ -81,9 +87,49 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Image Details"),
+        title: Text(" "),
+        actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.copy),
+          onPressed: () {
+            Clipboard.setData(new ClipboardData(text: recognizedText  )).then((_) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Copied to clipboard')));
+            });
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.share),
+          onPressed: () {
+            Share.share(recognizedText);
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.picture_as_pdf_outlined),
+          onPressed: () async{
+            String dateTime = DateFormat.yMMMd()
+                .addPattern('-')
+                .add_Hms()
+                .format(DateTime.now())
+                .toString();
+
+            String formattedDateTime = dateTime.replaceAll(' ', '');
+            final pdf = pw.Document();
+
+            pdf.addPage(pw.Page(
+                pageFormat: PdfPageFormat.a4,
+                build: (pw.Context context) {
+                  return (pw.Text(recognizedText));
+                }));
+                final output = await getTemporaryDirectory();
+                final file = File("${output.path}/$formattedDateTime.pdf");
+                await file.writeAsBytes(await pdf.save());
+                Share.shareFiles(["${output.path}/$formattedDateTime.pdf"]);
+          },
+        ),
+      ]
       ),
-      body: _imageSize != null
+      body: 
+      _imageSize != null
           ? Container(
               child: SingleChildScrollView(
                 child: Align(

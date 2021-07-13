@@ -1,5 +1,7 @@
-import 'package:digitizing_prescriptions/camera.dart';
+import 'package:digitizing_prescriptions/home.dart';
 
-void main() async {
-  checkCameras();
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
 }
