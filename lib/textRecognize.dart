@@ -120,7 +120,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 build: (pw.Context context) {
                   return (pw.Text(recognizedText));
                 }));
-                final output = await getTemporaryDirectory();
+                final output = await getApplicationDocumentsDirectory();
                 final file = File("${output.path}/$formattedDateTime.pdf");
                 await file.writeAsBytes(await pdf.save());
                 Share.shareFiles(["${output.path}/$formattedDateTime.pdf"]);

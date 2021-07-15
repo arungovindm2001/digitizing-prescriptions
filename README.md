@@ -3,14 +3,14 @@
 <p>A Flutter application that converts prescriptions to text.</p>
 
 * Pick any image in your gallery and get it displayed as text.
-* Take a photo of your prescription and get it converted it as text. **(under development)**
-
+* Take a photo of your prescription and get it converted it as text.
 ### Packages Used
 * camera
 * path_provider
 * intl
 * firebase_ml_vision
 * image_picker
+* pdf
 
 ## Installation
 
@@ -29,11 +29,8 @@
 		5.  Return to the previous screen to find  **Developer options**  near the bottom.
 		6.  Scroll down and **enable USB debugging**.
 	
- 5. Your device should be present on the virtual devices list.
+ 5. Your device should be present on the devices list.
  6. Run the app. The app will open in your phone.
- 
- **WARNING:** The app is still in development stage. You might run into some issues while installing.
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.

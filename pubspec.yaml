@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   share_plus: ^1.2.0
   pdf: ^3.4.2
+  edge_detection: ^1.0.6
 
 dev_dependencies:
   flutter_test:

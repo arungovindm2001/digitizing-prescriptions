@@ -22,54 +22,60 @@ class HomeScreen extends StatelessWidget {
   return Scaffold(
       appBar: AppBar(
         title: Text('Home Page'),
-        backgroundColor: Colors.greenAccent[400],
         centerTitle: true,
       ), //AppBar
-      body: Container(
-            child: Align(
-              alignment: Alignment.center,
-              child: Card(
-                elevation: 8,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(),
-                          ElevatedButton.icon(
-                          icon: const Icon(Icons.camera_alt),
-                          label:Text('Camera'),
-                          onPressed: () async {
-                            Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Camera()),
-                        );
-                              }
-                          ),
-                          ElevatedButton.icon(
-                          icon: const Icon(Icons.image_outlined),
-                          label:Text('Pick from Gallery'),
-                          onPressed: () async {
-                            File awaitImage = await ImagePicker.pickImage(source: ImageSource.gallery);
-                            String image = awaitImage.path;
-                            print(image);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(image),
-                              ),
-                            );
-                              }
-                          )
-                    ],
-                  ),
+      body:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+        Card(
+          elevation: 8,
+          child: InkWell(
+            splashColor: Colors.blue.withAlpha(30),
+            onTap: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Camera()),
+              );
+            },
+            child: Container(
+              child: Center(
+                child: Icon(Icons.camera_alt,color: Colors.blueAccent, size: 50,)
                 ),
-              ),
+              width: 100.0,
+              height: 100.0,
             ),
           ),
-    ); //Scaffold
+        ),
+        Card(
+          elevation: 8,
+          child: InkWell(
+            splashColor: Colors.blue.withAlpha(30),
+            onTap: () async {
+              File awaitImage =
+                  await ImagePicker.pickImage(source: ImageSource.gallery);
+              String image = awaitImage.path;
+              print(image);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(image),
+                ),
+              );
+            },
+            child: Container(
+              child: Center(
+                child: Icon(Icons.image_outlined,
+                    color: Colors.blueAccent,
+                    size: 50,
+                  )
+              ),
+              width: 100.0,
+              height: 100.0,
+            ),
+          ),
+        ),
+      ]
+      ),
+    );
   }
 }
