@@ -19,7 +19,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_ml_vision: ^0.9.3+8
   image_picker: ^0.6.3+4
   camera: ^0.5.7+4
   path_provider: ^1.6.7
@@ -30,26 +29,30 @@ dependencies:
   cupertino_icons: ^0.1.2
   share_plus: ^1.2.0
   pdf: ^3.4.2
-  edge_detection: ^1.0.6
+
+  firebase_ml_vision: ^0.9.3+8
+  google_sign_in: ^5.0.0
+  font_awesome_flutter: ^9.1.0
+  google_fonts: ^1.1.2
+  firebase_auth: ^0.16.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
 

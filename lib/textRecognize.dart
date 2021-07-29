@@ -7,6 +7,9 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+// import 'package:firebase_core/firebase_core.dart' as firebase_core;
+// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'dart:io';
 import 'dart:ui';
@@ -58,6 +61,18 @@ class _DetailScreenState extends State<DetailScreen> {
     }
   }
 
+  // Future<void> uploadFile(String filePath, String fileName) async {
+  //   File file = File(filePath);
+
+  //   try {
+  //     await firebase_storage.FirebaseStorage.instance
+  //         .ref('pdfs/$fileName.pdf')
+  //         .putFile(file);
+  //   } on firebase_core.FirebaseException catch (e) {
+  //     print(e);
+  //   }
+  // }
+
   Future<void> _getImageSize(File imageFile) async {
     final Completer<Size> completer = Completer<Size>();
 
@@ -86,14 +101,14 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(" "),
-        actions: <Widget>[
+      appBar: AppBar(title: Text(" "), actions: <Widget>[
         IconButton(
           icon: Icon(Icons.copy),
           onPressed: () {
-            Clipboard.setData(new ClipboardData(text: recognizedText  )).then((_) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Copied to clipboard')));
+            Clipboard.setData(new ClipboardData(text: recognizedText))
+                .then((_) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text('Copied to clipboard')));
             });
           },
         ),
@@ -105,7 +120,7 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
         IconButton(
           icon: Icon(Icons.picture_as_pdf_outlined),
-          onPressed: () async{
+          onPressed: () async {
             String dateTime = DateFormat.yMMMd()
                 .addPattern('-')
                 .add_Hms()
@@ -120,16 +135,17 @@ class _DetailScreenState extends State<DetailScreen> {
                 build: (pw.Context context) {
                   return (pw.Text(recognizedText));
                 }));
-                final output = await getApplicationDocumentsDirectory();
-                final file = File("${output.path}/$formattedDateTime.pdf");
-                await file.writeAsBytes(await pdf.save());
-                Share.shareFiles(["${output.path}/$formattedDateTime.pdf"]);
+            final output = await getApplicationDocumentsDirectory();
+            final file = File("${output.path}/$formattedDateTime.pdf");
+            await file.writeAsBytes(await pdf.save());
+
+            // await uploadFile(
+            //     "${output.path}/$formattedDateTime.pdf", formattedDateTime);
+            Share.shareFiles(["${output.path}/$formattedDateTime.pdf"]);
           },
         ),
-      ]
-      ),
-      body: 
-      _imageSize != null
+      ]),
+      body: _imageSize != null
           ? Container(
               child: SingleChildScrollView(
                 child: Align(
