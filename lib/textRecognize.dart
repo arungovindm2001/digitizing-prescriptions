@@ -7,13 +7,20 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
-// import 'package:firebase_core/firebase_core.dart' as firebase_core;
-// import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-// import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'dart:io';
 import 'dart:ui';
 import 'dart:async';
+
+import './sign-in.dart';
+
+Future<String> futureEmail() async {
+  final FirebaseUser currentUser = await firebaseAuth.currentUser();
+  final String fEmail = currentUser.email;
+  return fEmail;
+}
 
 class DetailScreen extends StatefulWidget {
   final String imagePath;
@@ -24,15 +31,32 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  final _firebaseStorage = FirebaseStorage.instance;
   _DetailScreenState(this.path);
+  String formattedDateTime = DateFormat.yMMMd()
+      .addPattern('-')
+      .add_Hms()
+      .format(DateTime.now())
+      .toString();
 
   final String path;
 
   Size _imageSize;
   String recognizedText = "Loading ...";
 
-  void _initializeVision() async {
+  void initializeVision() async {
     final File imageFile = File(path);
+    final email = await futureEmail();
+    if (imageFile != null) {
+      var snapshot = await _firebaseStorage
+          .ref()
+          .child('$email/images/$formattedDateTime')
+          .putFile(imageFile)
+          .onComplete;
+      var downloadUrl = await snapshot.ref.getDownloadURL();
+    } else {
+      print('No Image Path Received');
+    }
 
     if (imageFile != null) {
       await _getImageSize(imageFile);
@@ -61,18 +85,6 @@ class _DetailScreenState extends State<DetailScreen> {
     }
   }
 
-  // Future<void> uploadFile(String filePath, String fileName) async {
-  //   File file = File(filePath);
-
-  //   try {
-  //     await firebase_storage.FirebaseStorage.instance
-  //         .ref('pdfs/$fileName.pdf')
-  //         .putFile(file);
-  //   } on firebase_core.FirebaseException catch (e) {
-  //     print(e);
-  //   }
-  // }
-
   Future<void> _getImageSize(File imageFile) async {
     final Completer<Size> completer = Completer<Size>();
 
@@ -94,7 +106,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   void initState() {
-    _initializeVision();
+    initializeVision();
     super.initState();
   }
 
@@ -121,13 +133,7 @@ class _DetailScreenState extends State<DetailScreen> {
         IconButton(
           icon: Icon(Icons.picture_as_pdf_outlined),
           onPressed: () async {
-            String dateTime = DateFormat.yMMMd()
-                .addPattern('-')
-                .add_Hms()
-                .format(DateTime.now())
-                .toString();
-
-            String formattedDateTime = dateTime.replaceAll(' ', '');
+            final email = await futureEmail();
             final pdf = pw.Document();
 
             pdf.addPage(pw.Page(
@@ -139,8 +145,12 @@ class _DetailScreenState extends State<DetailScreen> {
             final file = File("${output.path}/$formattedDateTime.pdf");
             await file.writeAsBytes(await pdf.save());
 
-            // await uploadFile(
-            //     "${output.path}/$formattedDateTime.pdf", formattedDateTime);
+            var sspdf = await _firebaseStorage
+                .ref()
+                .child('$email/pdfs/$formattedDateTime')
+                .putFile(file)
+                .onComplete;
+            var downloadUrl = await sspdf.ref.getDownloadURL();
             Share.shareFiles(["${output.path}/$formattedDateTime.pdf"]);
           },
         ),

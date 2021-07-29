@@ -5,7 +5,6 @@ import 'package:digitizing_prescriptions/camera.dart';
 import 'package:digitizing_prescriptions/textRecognize.dart';
 import './sign-in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -18,15 +17,18 @@ class HomeScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 20.0),
             child: IconButton(
               onPressed: () async {
-                await MyHomePage().signOutGoogle;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) {
-                  return MyHomePage();
-                  },),);
+                MyHomePage().signOutGoogle();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MyHomePage();
+                    },
+                  ),
+                );
               },
               icon: Icon(Icons.exit_to_app),
-              ),
-            )
+            ),
+          )
         ],
       ), //AppBar
       body: Row(
