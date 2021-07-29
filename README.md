@@ -4,13 +4,17 @@
 
 * Pick any image in your gallery and get it displayed as text.
 * Take a photo of your prescription and get it converted it as text.
+* Share the text as pdf or copy and share it anywhere you want.
+
 ### Packages Used
-* camera
-* path_provider
-* intl
-* firebase_ml_vision
-* image_picker
-* pdf
+* [camera](https://pub.dev/packages/camera)
+* [path_provider](https://pub.dev/packages/path_provider)
+* [intl](https://pub.dev/packages/intl)
+* [firebase_auth](https://pub.dev/packages/firebase_auth)
+* [google_sign_in](https://pub.dev/packages/google_sign_in)
+* [firebase_ml_vision](https://pub.dev/packages/firebase_ml_vision)
+* [image_picker](https://pub.dev/packages/image_picker)
+* [pdf](https://pub.dev/packages/pdf)
 
 ## Installation
 
@@ -31,6 +35,7 @@
 	
  5. Your device should be present on the devices list.
  6. Run the app. The app will open in your phone.
+ 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
